@@ -5,8 +5,8 @@
 ## Instrucciones de Instalación y Despliegue 
 
 > **Requerimientos**:
- Instalar AWS Cli
- Instalar Node Js
+ - Instalar AWS Cli
+ - Instalar Node Js
 
 ### Using NPM
 
