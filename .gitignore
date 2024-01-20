@@ -16,6 +16,15 @@ Deploy/example.py
 Deploy/example.zip
 Deploy/explan.out
 
-Serverless
+# package directories
+
+Serverless/node_modules
+Serverless/jspm_packages
+# Serverless directories
+Serverless/.serverless
+# esbuild directories
+Serverless/.esbuild
+Serverless/.nvmrc
+Serverless/src2
 
 

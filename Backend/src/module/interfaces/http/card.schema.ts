@@ -35,6 +35,6 @@ export const cardSchema = {
                 const domain = value.split("@")[1];
                 return validDomains.includes(domain);
             })
-            }),
+        }),
     }
 }
