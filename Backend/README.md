@@ -1,6 +1,6 @@
 > **Requerimientos**:
- Instalar Docker
- Instalar Node Js
+ - Instalar Docker
+ - Instalar Node Js
 
 ## Configuración inicial
 - Debe tener configurada la base de datos MongoDB en su sistema o crear una imagen de docker de la misma
