@@ -1,6 +1,6 @@
 import type { AWS } from "@serverless/typescript";
 
-import { tokenization } from "./src/functions";
+import { token,card } from "./src/functions";
 
 const serverlessConfiguration: AWS = {
   service: "delfosti",
@@ -44,7 +44,7 @@ const serverlessConfiguration: AWS = {
       concurrency: 10,
     },
   },
-  functions: { tokenization},
+  functions: { token,card},
   resources:{
     Resources: {
       CardTable: {

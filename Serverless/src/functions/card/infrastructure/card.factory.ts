@@ -1,6 +1,6 @@
 import { Card } from "../domain/card";
 import * as AWS from "aws-sdk";
-import { v4 } from "uuid";
+/* import { v4 } from "uuid"; */
 
 export interface IPattern {
   Source: string;
@@ -9,18 +9,17 @@ export interface IPattern {
 
 //const awsLambda = new AWS.Lambda();
 /* const awsEventBridge = new AWS.EventBridge(); */
-const dynamodb = new AWS.DynamoDB.DocumentClient();
+const dynamodb = new AWS.DynamoDB.DocumentClient({
+  endpoint: "http://localhost:8000",
+});
 /* const sns = new AWS.SNS(); */
 
 export abstract class Factory {
   //abstract lambdaNameInvoke: string;
   abstract pattern: IPattern;
 
-  async create(token: string, card: Card) {
-    console.log('factory',token)
-    console.log('factory',card)
-    console.log(`Sending ${card}`);
-    const id = v4();
+  async find(payload: Card) {
+    console.log('factory',payload)
 
     /* const parameters = {
       Entries: [
@@ -34,13 +33,17 @@ export abstract class Factory {
 
     //console.log(parameters);
 
-    const newCard = { id,token, ...card };
-    await dynamodb
-      .put({
+    console.log(payload.tokenAuth)
+    const result : any = await dynamodb
+      .get({
         TableName: "card",
-        Item: newCard,
+        Key: {token : payload.tokenAuth},
       })
       .promise();
+    
+    console.log(result)
+
+    return result
 
    /*  const parametersSNS = {
       Message: JSON.stringify({ id, ...appointment }),
@@ -61,7 +64,6 @@ export abstract class Factory {
       })
       .promise();  */
 
-    //return result;
   }
 }
 

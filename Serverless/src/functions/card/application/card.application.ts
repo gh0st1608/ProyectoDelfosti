@@ -1,5 +1,6 @@
 import { Card } from "../domain/card";
 import { CardRepository } from "../domain/repositories/card.repository";
+import {Token} from '../helpers/token.helper'
 import {
   Factory,
   FactoryPE
@@ -11,11 +12,15 @@ import {
 export class CardApplication {
   constructor(private cardRepository: CardRepository) {}
 
-  async create(token: string, card: Card) {
+  async find(tokenAuth: string) {
     let factory: Factory;
-    console.log('application',token)
-    console.log('application',card)
+    //console.log('application',token)
+    console.log('application',tokenAuth)
     factory = new FactoryPE();
+
+    const payload : Card = Token.decode(tokenAuth)
+
+    /* const token = Token.generate(token) */
 
 /*     switch (appointment.countryISO) {
       case "PE":
@@ -28,6 +33,6 @@ export class CardApplication {
         factory = new FactoryEC();
         break;
     } */
-    await this.cardRepository.create(token, card, factory);
+    return await this.cardRepository.find(payload, factory);
   }
 }

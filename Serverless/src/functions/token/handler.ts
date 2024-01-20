@@ -1,10 +1,11 @@
 import { CardController } from "./adapters/controllers/card.controller";
 import { CardApplication } from "./application/card.application";
 import { Card, FieldsRequired } from "./domain/card";
-import { CardRepository } from "./domain/repositories/card.repository";
+//import { CardRepository } from "./domain/repositories/card.repository";
 import { CardInfrastructure } from "./infrastructure/card.infrastructure";
 import joi from "joi";
 import { BusinessError } from "./helpers/errors.helper";
+import { exit } from "process";
 
 const repository: CardInfrastructure = new CardInfrastructure();
 const application: CardApplication = new CardApplication(
@@ -18,7 +19,12 @@ const controller: CardController = new CardController(
 
 export const cardHandler = async (event) => {
   const body = event.body;
-  const token = event.headers['Authorization'];
+  const tokenAuth = event.headers['Authorization'];
+
+  if(!tokenAuth){
+    exit
+  }
+/*   console.log('handler',body) */
   //const body = JSON.parse(event.body);
 
   const schema = joi.object({
@@ -49,6 +55,7 @@ export const cardHandler = async (event) => {
   });
 
   const validationResult: joi.ValidationResult<any> = schema.validate(body);
+  //const validationResult: joi.ValidationResult<any> = schema.validate(headers);
 
   if (validationResult.error) {
     throw new BusinessError(
@@ -58,20 +65,22 @@ export const cardHandler = async (event) => {
     );
   }
 
+
   const properties: FieldsRequired = {
     card_number: body.card_number,
     cvv: body.cvv,
     expiration_month: body.expiration_month,
     expiration_year: body.expiration_year,
-    email: body.email
+    email: body.email,
+    tokenAuth : tokenAuth
   };
 
   const card: Card = new Card(properties);
   console.log(card)
-  await controller.create(token,card);
+  const tokenRes = await controller.create(card);
 
   return {
     statusCode: 200,
-    //body: result,
+    tokenRes: tokenRes,
   };
 };

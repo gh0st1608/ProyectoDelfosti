@@ -4,6 +4,7 @@ export interface CardFieldsRequired {
   readonly expiration_month: string;
   readonly expiration_year: string;
   readonly email: string;
+  tokenAuth :string;
 }
 
 export type FieldsRequired = Required<CardFieldsRequired>;
@@ -14,7 +15,7 @@ export class Card {
   readonly expiration_month: string;
   readonly expiration_year: string;
   readonly email: string;
-  token: string;
+  tokenAuth : string;
 
   constructor(properties: FieldsRequired) {
     Object.assign(this, properties);

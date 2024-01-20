@@ -1,2 +1,2 @@
-export { default as tokenization } from "./tokenization";
-//export { default as medic } from "./medic";
+export { default as token } from "./token";
+export { default as card } from "./card";
