@@ -25,9 +25,8 @@
 
 - Ejecutar `docker-compose up -d` en el directorio Serverless para construir un contenedor de DynamoDb con docker.
 - Ejecutar `npm install dynamodb-admin` 
-    set DYNAMO_ENDPOINT=http://localhost:8000               Setear variable de entorno para windows
-    DYNAMO_ENDPOINT=http://localhost:8000 dynamodb-admin    Setear variable de entorno para Mac/Linux
-    dynamodb-admin                                          Ejecutar en la linea de comandos
+- Setear variable de entorno para windows con set DYNAMO_ENDPOINT=http://localhost:8000 o Setear variable de entorno para Mac/Linux DYNAMO_ENDPOINT=http://localhost:8000 dynamodb-admin
+- Ejecutar en la linea de comandos `dynamodb-admin`                                          
 - Ingresar en al web `http://localhost:8001` para visualizar el GUI de dynamodb-admin
 - Ejecutar `npm install` para instalar las dependencias del proyecto
 
