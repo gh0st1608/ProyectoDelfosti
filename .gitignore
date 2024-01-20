@@ -21,10 +21,11 @@ Deploy/explan.out
 Serverless/node_modules
 Serverless/jspm_packages
 # Serverless directories
+Serverless/my-dynamodb-data
+Serverless/.dynamodb
 Serverless/.serverless
 # esbuild directories
 Serverless/.esbuild
 Serverless/.nvmrc
-Serverless/src2
 
 
