@@ -1,6 +1,6 @@
 import type { AWS } from "@serverless/typescript";
 
-import { tokenization, medic } from "./src/functions";
+import { tokenization } from "./src/functions";
 
 const serverlessConfiguration: AWS = {
   service: "delfosti",
