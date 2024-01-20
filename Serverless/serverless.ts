@@ -44,7 +44,7 @@ const serverlessConfiguration: AWS = {
       concurrency: 10,
     },
   },
-  functions: { tokenization, medic },
+  functions: { tokenization},
   resources:{
     Resources: {
       CardTable: {
