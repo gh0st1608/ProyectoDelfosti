@@ -12,7 +12,8 @@ const serverlessConfiguration: AWS = {
     runtime: "nodejs14.x",
     stage: "${opt:stage, 'dev'}",
     environment: {
-      JWT_SECRET: "0ae8dW2FpEAZlxlz"
+      JWT_SECRET: "0ae8dW2FpEAZlxlz",
+      ENTORNO: "${self:provider.stage}"
     },
     iam: {
       role: {

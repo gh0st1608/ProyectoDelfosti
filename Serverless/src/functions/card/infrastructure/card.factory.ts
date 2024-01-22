@@ -9,17 +9,26 @@ export interface IPattern {
 
 //const awsLambda = new AWS.Lambda();
 /* const awsEventBridge = new AWS.EventBridge(); */
-const dynamodb = new AWS.DynamoDB.DocumentClient({
-  endpoint: "http://localhost:8000",
-});
+
+
 /* const sns = new AWS.SNS(); */
 
 export abstract class Factory {
   //abstract lambdaNameInvoke: string;
   abstract pattern: IPattern;
 
+  
+
   async find(tokenCard: string) {
-    console.log('factory',tokenCard)
+
+    const dynamodb = process.env.ENTORNO == 'dev'? new AWS.DynamoDB.DocumentClient({endpoint: "http://localhost:8000"}) : new AWS.DynamoDB.DocumentClient({});
+/*     if (env == 'dev'){
+      var dynamodb = new AWS.DynamoDB.DocumentClient({
+        endpoint: "http://localhost:8000",
+      });
+    }else{
+      var dynamodb = new AWS.DynamoDB.DocumentClient({});
+    } */
 
     /* const parameters = {
       Entries: [

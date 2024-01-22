@@ -9,9 +9,7 @@ export interface IPattern {
 
 //const awsLambda = new AWS.Lambda();
 /* const awsEventBridge = new AWS.EventBridge(); */
-const dynamodb = new AWS.DynamoDB.DocumentClient({
-  endpoint: "http://localhost:8000",
-});
+const dynamodb = process.env.ENTORNO == 'dev'? new AWS.DynamoDB.DocumentClient({endpoint: "http://localhost:8000"}) : new AWS.DynamoDB.DocumentClient({});
 /* const sns = new AWS.SNS(); */
 
 export abstract class Factory {

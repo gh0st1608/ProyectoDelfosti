@@ -13,7 +13,7 @@
 - Ejecutar `serverless config credentials --provider A --key B --secret C` para establecer credenciales del proveedor de la nube en caso no lo tenga configurado en su editor de codigo VS. Donde A es el proveedor de nube (aws), B es la llave de su acceso a la cuenta de su proveedor de nueb y C es su clave secreta de la cuenta de su proveedor de nube.
 - Ejecutar `npm install` para instalar las dependencias del proyecto
 - Ejecutar `npm install serverless -g`para instalar la línea de comandos serverless en su máquina
-- Ejecutar `serverless deploy` para desplegar el stack en producción
+- Ejecutar `serverless deploy --stage prod` para desplegar el stack en producción
 
 
 
