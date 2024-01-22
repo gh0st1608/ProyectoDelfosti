@@ -12,27 +12,21 @@ import {
 export class CardApplication {
   constructor(private cardRepository: CardRepository) {}
 
-  async find(tokenAuth: string) {
+  async find(tokenCard: string) {
     let factory: Factory;
     //console.log('application',token)
-    console.log('application',tokenAuth)
+    console.log('application',tokenCard)
     factory = new FactoryPE();
+    const card = await this.cardRepository.find(tokenCard, factory);
 
-    const payload : Card = Token.decode(tokenAuth)
+    const data = Token.decode(card['Item']['tokenJwt'])
 
-    /* const token = Token.generate(token) */
 
-/*     switch (appointment.countryISO) {
-      case "PE":
-        factory = new FactoryPE();
-        break;
-      case "CO":
-        factory = new FactoryCO();
-        break;
-      case "EC":
-        factory = new FactoryEC();
-        break;
-    } */
-    return await this.cardRepository.find(payload, factory);
+    const cardResponse = new Card(data['card'])
+
+    const result = {...cardResponse, cvv: undefined}
+
+    console.log(result)
+    return result
   }
 }

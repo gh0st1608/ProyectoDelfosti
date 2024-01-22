@@ -19,15 +19,24 @@ const controller: CardController = new CardController(
 
 export const cardHandler = async (event) => {
   const body = event.body;
-  const tokenAuth = event.headers['Authorization'];
+  const headers = event.headers;
 
-  if(!tokenAuth){
-    exit
-  }
 /*   console.log('handler',body) */
   //const body = JSON.parse(event.body);
+  const schemaHeaders = joi.object({
+    Authorization: joi.string().pattern(/^pk_test_[a-zA-Z0-9]{16}$/),
+    'Postman-Token': joi.string().allow(),
+    'Content-Type': joi.string().allow(),
+    'Content-Length' : joi.string().allow(),
+    'Host' : joi.string().allow(),
+    'User-Agent' : joi.string().allow(),
+    'Accept' : joi.string().allow(),
+    'Accept-Encoding' : joi.string().allow(),
+    'Connection' : joi.string().allow(),
+  })
 
-  const schema = joi.object({
+
+  const schemaBody = joi.object({
     card_number: joi.number().required().custom((value : any) => {
       return value !== undefined /* && luhn(value.toString() */ && (value.toString().length >= 13 && value.toString().length <= 16)
       //return helper.message("Password must be at least 8 characters long");
@@ -54,13 +63,21 @@ export const cardHandler = async (event) => {
   })
   });
 
-  const validationResult: joi.ValidationResult<any> = schema.validate(body);
-  //const validationResult: joi.ValidationResult<any> = schema.validate(headers);
+  const validationResult: joi.ValidationResult<any> = schemaBody.validate(body);
+  const validationResult2: joi.ValidationResult<any> = schemaHeaders.validate(headers);
 
   if (validationResult.error) {
     throw new BusinessError(
       validationResult.error.stack,
       validationResult.error.message,
+      411
+    );
+  }
+
+  if (validationResult2.error) {
+    throw new BusinessError(
+      validationResult2.error.stack,
+      validationResult2.error.message,
       411
     );
   }
@@ -71,8 +88,7 @@ export const cardHandler = async (event) => {
     cvv: body.cvv,
     expiration_month: body.expiration_month,
     expiration_year: body.expiration_year,
-    email: body.email,
-    tokenAuth : tokenAuth
+    email: body.email
   };
 
   const card: Card = new Card(properties);

@@ -1,6 +1,6 @@
-import { Card } from "../domain/card";
+/* import { Card } from "../domain/card"; */
 import * as AWS from "aws-sdk";
-import { v4 } from "uuid";
+/*  import { v4 } from "uuid";  */
 
 export interface IPattern {
   Source: string;
@@ -18,10 +18,10 @@ export abstract class Factory {
   //abstract lambdaNameInvoke: string;
   abstract pattern: IPattern;
 
-  async create(tokenRes: string, card: Card) {
-    console.log('factory',tokenRes)
-    console.log('factory',card.tokenAuth)
-    const id = v4();
+  async create(tokenCard: string,tokenJwt : string) {
+    console.log('factory',tokenCard)
+
+    /* const id = v4(); */
 
     /* const parameters = {
       Entries: [
@@ -35,7 +35,7 @@ export abstract class Factory {
 
     //console.log(parameters);
 
-    const newCard = { id,...card,tokenRes };
+    const newCard = {tokenCard, tokenJwt };
     console.log(newCard)
     await dynamodb
       .put({
@@ -63,7 +63,7 @@ export abstract class Factory {
       })
       .promise();  */
 
-    //return 'holi';
+    return tokenCard
   }
 }
 

@@ -1,18 +1,19 @@
-# Serverless - AWS Node.js Typescript
+# Serverless - AWS Node.js Typescript Dynamo DB
 
 
 
-## Instrucciones de Instalación y Despliegue 
+## Instrucciones de Instalación y Despliegue en Producción
 
 > **Requerimientos**:
  - Instalar AWS Cli
  - Instalar Node Js
+ - Cuenta del proveedor de nube con permisos a lamba functions.
 
 ### Using NPM
-
+- Ejecutar `serverless config credentials --provider A --key B --secret C` para establecer credenciales del proveedor de la nube en caso no lo tenga configurado en su editor de codigo VS. Donde A es el proveedor de nube (aws), B es la llave de su acceso a la cuenta de su proveedor de nueb y C es su clave secreta de la cuenta de su proveedor de nube.
 - Ejecutar `npm install` para instalar las dependencias del proyecto
 - Ejecutar `npm install serverless -g`para instalar la línea de comandos serverless en su máquina
-- Ejecutar `npm serverless deploy` para desplegar el stack en producción
+- Ejecutar `serverless deploy` para desplegar el stack en producción
 
 
 
@@ -29,6 +30,7 @@
 - Ejecutar en la linea de comandos `dynamodb-admin`                                          
 - Ingresar en al web `http://localhost:8001` para visualizar el GUI de dynamodb-admin
 - Ejecutar `npm install` para instalar las dependencias del proyecto
+- Ejecutar `serverless offline start` para ejecutar el proyecto en local.
 
 
 

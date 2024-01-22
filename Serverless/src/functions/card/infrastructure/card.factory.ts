@@ -18,8 +18,8 @@ export abstract class Factory {
   //abstract lambdaNameInvoke: string;
   abstract pattern: IPattern;
 
-  async find(payload: Card) {
-    console.log('factory',payload)
+  async find(tokenCard: string) {
+    console.log('factory',tokenCard)
 
     /* const parameters = {
       Entries: [
@@ -33,15 +33,15 @@ export abstract class Factory {
 
     //console.log(parameters);
 
-    console.log(payload.tokenAuth)
+    console.log('tokencard',tokenCard)
     const result : any = await dynamodb
       .get({
         TableName: "card",
-        Key: {token : payload.tokenAuth},
+        Key: {tokenCard : tokenCard},
       })
       .promise();
     
-    console.log(result)
+    console.log('result',result)
 
     return result
 

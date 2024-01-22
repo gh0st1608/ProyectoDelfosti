@@ -8,10 +8,11 @@ const serverlessConfiguration: AWS = {
   plugins: ["serverless-esbuild",'serverless-offline','serverless-dynamodb-local'],
   provider: {
     name: "aws",
+    profile: "default",
     runtime: "nodejs14.x",
     stage: "${opt:stage, 'dev'}",
     environment: {
-      JWT_SECRET: "6b219fc8-0f7d-4985-a419-b4ae7a6e034f",
+      JWT_SECRET: "0ae8dW2FpEAZlxlz"
     },
     iam: {
       role: {
@@ -50,11 +51,27 @@ const serverlessConfiguration: AWS = {
       CardTable: {
         Type: 'AWS::DynamoDB::Table',
         Properties: {
-          TableName: '${self:custom.tableName}'
+          AttributeDefinitions: [
+            {
+              "AttributeName": "tokenCard",
+              "AttributeType": "S"
+            }
+          ],
+          TableName: '${self:custom.tableName}',
+          KeySchema: [
+            {
+              "AttributeName": "tokenCard",
+              "KeyType": "HASH"
+            }
+          ],
+          ProvisionedThroughput: {
+            ReadCapacityUnits: 3,
+            WriteCapacityUnits: 3
+          },       
         }
       }
     }
   }
-};
+}
 
 module.exports = serverlessConfiguration;

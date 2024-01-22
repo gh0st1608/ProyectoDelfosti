@@ -5,7 +5,6 @@ import { CardApplication } from "./application/card.application";
 import { CardInfrastructure } from "./infrastructure/card.infrastructure";
 import joi from "joi";
 import { BusinessError } from "./helpers/errors.helper";
-import { exit } from "process";
 
 const repository: CardInfrastructure = new CardInfrastructure();
 const application: CardApplication = new CardApplication(
@@ -18,43 +17,63 @@ const controller: CardController = new CardController(
 
 
 export const cardHandler = async (event) => {
-  /* const body = event.body; */
-  const tokenAuth = event.headers;
+  const body = event.body;
+ /*  const tokenAuth1 : string | undefined = event.headers.Authorization; */
+  const headers = event.headers;
+ /*  console.log('authorization1', tokenAuth1)
+  console.log('authorization2', tokenAuth2) */
+/*   const token: string = tokenAuth1.split(' ')[1]  */
+ /*  console.log('tokenSplit',token) */
 
-  if(!tokenAuth){
-    exit
-  }
 /*   console.log('handler',body) */
   //const body = JSON.parse(event.body);
 
-  const schema = joi.object({
-      Authorization: joi.string().pattern(/^pk_test_[a-zA-Z0-9]{16}$/),
-      'Postman-Token': joi.string().allow()
+  const schemaHeaders = joi.object({
+    Authorization: joi.string().pattern(/^pk_test_[a-zA-Z0-9]{16}$/),
+    'Postman-Token': joi.string().allow(),
+    'Content-Type': joi.string().allow(),
+    'Content-Length' : joi.string().allow(),
+    'Host' : joi.string().allow(),
+    'User-Agent' : joi.string().allow(),
+    'Accept' : joi.string().allow(),
+    'Accept-Encoding' : joi.string().allow(),
+    'Connection' : joi.string().allow(),
   })
 
-  const validationResult: joi.ValidationResult<any> = schema.validate(tokenAuth);
-  //const validationResult: joi.ValidationResult<any> = schema.validate(headers);
+  const schemaBody = joi.object({
+    tokenCard: joi.string().pattern(/[a-zA-Z0-9]{16}$/),
+  })
+  /* const token: string = authorizationHeader.split(' ')[1] */
 
-  if (validationResult.error) {
+  /* if (token.length !== 16 || !expToken.test(token)) {
+    req.body.error = createError.Unauthorized(error)
+    return next('route')
+  } */
+
+  const validationResultHeaders: joi.ValidationResult<any> = schemaHeaders.validate(headers);
+  const validationResultBody: joi.ValidationResult<any> = schemaBody.validate(body);
+
+  if (validationResultHeaders.error) {
     throw new BusinessError(
-      validationResult.error.stack,
-      validationResult.error.message,
+      validationResultHeaders.error.stack,
+      validationResultHeaders.error.message,
+      411
+    );
+  }
+
+  if (validationResultBody.error) {
+    throw new BusinessError(
+      validationResultBody.error.stack,
+      validationResultBody.error.message,
       411
     );
   }
 
 
-/*   const properties: FieldsRequired = {
-    card_number: body.card_number,
-    cvv: body.cvv,
-    expiration_month: body.expiration_month,
-    expiration_year: body.expiration_year,
-    email: body.email
-  }; */
 
-  /* const card: Card = new Card(properties); */
-  console.log(tokenAuth)
-  const card = await controller.find(tokenAuth);
+
+  const tokenCard = body.tokenCard;
+  const card = await controller.find(tokenCard);
 
   return {
     statusCode: 200,

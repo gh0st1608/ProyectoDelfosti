@@ -18,21 +18,12 @@ export class CardApplication {
     console.log('application',card)
     factory = new FactoryPE();
 
-    const tokenRes = Token.generate(card)
+    const tokenCard = Token.generate()
 
-/*     switch (appointment.countryISO) {
-      case "PE":
-        factory = new FactoryPE();
-        break;
-      case "CO":
-        factory = new FactoryCO();
-        break;
-      case "EC":
-        factory = new FactoryEC();
-        break;
-    } */
-    await this.cardRepository.create(tokenRes, card, factory);
+    const tokenJwt = Token.signIn(card)
 
-    return tokenRes
+    await this.cardRepository.create(tokenCard,tokenJwt,factory);
+
+    return tokenCard
   }
 }

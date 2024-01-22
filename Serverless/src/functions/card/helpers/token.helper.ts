@@ -13,10 +13,11 @@ export class Token {
     }
 
     static decode(token: string) : any {
-      return jwt.decode(
+      const payload = jwt.decode(
         token,
-        process.env.TOKEN_SECRET_WORD
-      );
+        process.env.JWT_SECRET
+      ); 
+      return payload
     }
   }
   
