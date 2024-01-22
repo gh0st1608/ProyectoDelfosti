@@ -8,12 +8,12 @@ import EnvironmentVariables from "./app.service";
 export default class TokenService {
 
 
-   static async validateToken(accessToken: string) {
+   static validateToken(tokenCard: string) {
     return new Promise((resolve, reject) => {
       try {
-        console.log(accessToken)
+        console.log(tokenCard)
         const payload = jwt.decode(
-          accessToken,
+          tokenCard,
           EnvironmentVariables.TOKEN_SECRET_WORD
         );
         console.log(payload)
@@ -29,6 +29,20 @@ export default class TokenService {
     });
   }
 
+  static generate = (length: number = 16): string => {
+    /* if (typeof length !== 'number') return false
+    if (length < 16 || length > 16) return false */
+  
+    const characters: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    const charactersLength: number = characters.length
+    let token: string = ''
+  
+    for (let i: number = 0; i < length; i++) {
+      token += characters.charAt(Math.floor(Math.random() * charactersLength))
+    }
+    return token
+  }
+
    static signIn(card: Object, tokenExpiration: number = EnvironmentVariables.TOKEN_TIMEOUT): string{
 
     const payload = {
@@ -36,6 +50,5 @@ export default class TokenService {
       iat: moment().unix(),
       exp: moment().add(EnvironmentVariables.TOKEN_TIMEOUT, "minutes").unix(),
     };
-    console.log(jwt.encode(payload, EnvironmentVariables.TOKEN_SECRET_WORD))
     return jwt.encode(payload, EnvironmentVariables.TOKEN_SECRET_WORD);
 }}

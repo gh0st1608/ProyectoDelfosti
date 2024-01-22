@@ -11,12 +11,10 @@ export default class TokenApplication {
   }
 
   async createToken(card: Card) : Promise<string>{
-    const token = TokenService.signIn(card);
-    //falta transformar a modelo de datos de la bd
-    const cardWithToken = {...card,token};
-    console.log(cardWithToken)
-    await this.repository.insert(`${token}`,cardWithToken); //setPaymentInformationWithExpiration
-    return token
-
+    const tokenCard = TokenService.generate();
+    const tokenJwt = TokenService.signIn(card);
+    console.log(tokenCard,tokenJwt)
+    await this.repository.insert(tokenCard,tokenJwt); 
+    return tokenCard
   }
 }

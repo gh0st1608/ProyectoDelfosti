@@ -1,5 +1,5 @@
 import express, { Application, Request, Response } from 'express';
-//import { authorizationMiddleware } from "./middlewares/authorization";
+import { authorizationMiddleware } from "./middlewares/authorization";
 import routerCard from "./module/interfaces/http/router.card";
 import routerToken  from "./module/interfaces/http/router.token";
 import cors  from 'cors';
@@ -19,6 +19,7 @@ class App {
     this.expressApp.use(express.json());
     this.expressApp.use(cors());
     this.expressApp.use(express.urlencoded({ extended: false }));
+    this.expressApp.use(authorizationMiddleware)
   }
 
   

@@ -1,4 +1,4 @@
-import CardResponse from "../cardResponse";
+import Card from "../card";
 
 /*
 interface PaymentInformationRepository {
@@ -15,7 +15,7 @@ interface PaymentInformationRepository {
 */
 export default interface CardRepository {
   //insert(token: string, card : Card): Promise<void>; //set
-  findOne(where: { [s: string]: string | number }): Promise<CardResponse | null>;
+  findOne(where: { [s: string]: string | number }): Promise<Card | null>;
   //find(token: string): Promise<CardResponse>; //get
   
 }

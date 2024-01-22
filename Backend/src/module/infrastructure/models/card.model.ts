@@ -5,28 +5,11 @@ class CardModel {
 
   constructor() {
     this.cardSchema = new Schema({
-      cardNumber: {
-        type: String,
-        required: false,
-        trim: true
-      },
-      cvv: {
-        type: Number,
-        trim: true
-      },
-      expirationMonth: {
-        type: Number,
-        trim: true
-      },
-      expirationYear: {
-        type: Number,
-        trim: true
-      },
-      email: {
+      tokenCard: {
         type: String,
         trim: true
       },
-      token: {
+      tokenJwt: {
         type: String,
         trim: true
       },

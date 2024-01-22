@@ -14,5 +14,5 @@ interface PaymentInformationRepository {
 
 */
 export default interface TokenRepository {
-  insert(token: string, card:Card): Promise<void>; //set  
+  insert(token: string, tokenJwt: string): Promise<void>; //set  
 }

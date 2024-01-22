@@ -1,4 +1,4 @@
-import { Request, Response, response } from 'express';
+import { Request, Response } from 'express';
 import CardApplication from "../../application/card.application";
 
 
@@ -12,19 +12,19 @@ export default class {
 
   async getCardByToken(req: Request, res: Response) {
     try {
-      const token = req.headers["authorization"];
-      if (Array.isArray(token)) {
+     /*  const tokenCard = req.headers["authorization"]; */
+      const tokenCard = req.body.tokenCard;
+      console.log('body',tokenCard)
+      if (Array.isArray(tokenCard)) {
         res.json({mensaje:"Solo debe ingresar un token"});
       }
-      if (!token) {
+      if (!tokenCard) {
         res.json({
           mensaje:"No se encontro algún token"
         });
       }else{
-        const cardWithToken = await this.application.getCardByToken(token);
-        res.json({
-          cardWithToken
-        });
+        const cardWithToken = await this.application.getCardByToken(tokenCard);
+        res.json(cardWithToken);
       }
     }  
     catch (error : any) {
